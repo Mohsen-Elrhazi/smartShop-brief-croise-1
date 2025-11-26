@@ -8,12 +8,12 @@ import com.mohsen.smartshop_brief_croise.service.interfaces.IProduitService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @Tag(name="produits",description="API pour gerer les produits")
@@ -32,6 +32,44 @@ public class ProduitController {
                         .status("Success")
                         .message("Produit créé avec succès")
                         .data(created)
+                        .build()
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteProduit(@PathVariable Long id) {
+        boolean deleted = produitService.delete(id);
+        if (deleted) {
+            return ResponseEntity.ok(
+                    ApiResponse.<Void>builder()
+                            .status("Success")
+                            .message("Produit supprimé avec succès")
+                            .data(null)
+                            .build()
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    ApiResponse.<Void>builder()
+                            .status("Error")
+                            .message("Produit non trouvé")
+                            .data(null)
+                            .build()
+            );
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<Page<ProduitResponseDTO>>> getAllProduits(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProduitResponseDTO> produits = produitService.getAll(pageable);
+        return ResponseEntity.ok(
+                ApiResponse.<Page<ProduitResponseDTO>>builder()
+                        .status("Success")
+                        .message("Liste des produits récupérée avec succès")
+                        .data(produits)
                         .build()
         );
     }

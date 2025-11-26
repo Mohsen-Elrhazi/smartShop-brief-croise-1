@@ -8,9 +8,10 @@ import com.mohsen.smartshop_brief_croise.repository.ProduitRepository;
 import com.mohsen.smartshop_brief_croise.service.interfaces.IProduitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,17 +29,26 @@ public class ProduitServiceImpl implements IProduitService {
     }
 
     @Override
-    public Page<ProduitRequestDTO> getAll(Pageable pageable) {
-        return null;
+    public Page<ProduitResponseDTO> getAll(Pageable pageable) {
+       Page<Produit> produits =produitRepository.findByDeletedFalse(pageable);
+         return produits.map(produitMapper::toResponseDTO);
     }
 
     @Override
     public boolean delete(Long id) {
-        return false;
+            Optional<Produit> produitOpt= produitRepository.findById(id);
+
+            if(produitOpt.isPresent()){
+                Produit produit= produitOpt.get();
+                produit.setDeleted(true);
+                produitRepository.save(produit);
+                return true;
+            }
+            return false;
     }
 
     @Override
-    public ProduitRequestDTO update(Long id, ProduitRequestDTO produitDTO) {
+    public ProduitResponseDTO update(Long id, ProduitRequestDTO produitDTO) {
         return null;
     }
 }
