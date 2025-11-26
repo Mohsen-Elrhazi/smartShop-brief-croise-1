@@ -9,5 +9,6 @@ public class SmartShopBriefCroiseApplication {
     public static void main(String[] args) {
         SpringApplication.run(SmartShopBriefCroiseApplication.class, args);
     }
-
 }
+
+
