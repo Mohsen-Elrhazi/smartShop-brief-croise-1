@@ -1,4 +1,5 @@
-package com.mohsen.smartshop_brief_croise.dto;
+package com.mohsen.smartshop_brief_croise.dto.response;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProduitDTO {
-//    private Long id;
+public class ProduitResponseDTO {
+    private long id;
     private String nom;
     private double prixUnitaire;
     private int stockDisponible;
