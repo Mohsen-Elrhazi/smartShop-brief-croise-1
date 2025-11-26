@@ -1,6 +1,7 @@
 package com.mohsen.smartshop_brief_croise.service.impl;
 
 import com.mohsen.smartshop_brief_croise.dto.request.ProduitRequestDTO;
+import com.mohsen.smartshop_brief_croise.dto.request.ProduitUpdateDTO;
 import com.mohsen.smartshop_brief_croise.dto.response.ProduitResponseDTO;
 import com.mohsen.smartshop_brief_croise.mapper.ProduitMapper;
 import com.mohsen.smartshop_brief_croise.model.Produit;
@@ -48,7 +49,23 @@ public class ProduitServiceImpl implements IProduitService {
     }
 
     @Override
-    public ProduitResponseDTO update(Long id, ProduitRequestDTO produitDTO) {
+    public ProduitResponseDTO update(Long id, ProduitUpdateDTO dto) {
+        Optional<Produit> produitOpt= produitRepository.findById(id);
+
+        if(produitOpt.isPresent()){
+            Produit produit= produitOpt.get();
+
+//           produit.setNom(dto.getNom());
+//           produit.setPrixUnitaire(dto.getPrixUnitaire());
+//           produit.setStockDisponible(dto.getStockDisponible());
+
+            if (dto.getNom() != null) produit.setNom(dto.getNom());
+            if (dto.getPrixUnitaire() != null) produit.setPrixUnitaire(dto.getPrixUnitaire());
+            if (dto.getStockDisponible() != null) produit.setStockDisponible(dto.getStockDisponible());
+
+            Produit updated= produitRepository.save(produit);
+            return produitMapper.toResponseDTO(updated);
+        }
         return null;
     }
 }

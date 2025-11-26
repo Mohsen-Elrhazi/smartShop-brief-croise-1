@@ -14,8 +14,8 @@ public class ProduitRequestDTO {
     private String nom;
 
     @NotNull(message = "Le prix unitaire est obligatoire")
-    private double prixUnitaire;
+    private Double prixUnitaire;
 
     @NotNull(message = "Le stock disponible est obligatoire")
-    private int stockDisponible;
+    private Integer stockDisponible;
 }

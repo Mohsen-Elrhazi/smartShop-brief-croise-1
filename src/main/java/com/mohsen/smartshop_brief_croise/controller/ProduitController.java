@@ -2,6 +2,7 @@ package com.mohsen.smartshop_brief_croise.controller;
 
 
 import com.mohsen.smartshop_brief_croise.dto.request.ProduitRequestDTO;
+import com.mohsen.smartshop_brief_croise.dto.request.ProduitUpdateDTO;
 import com.mohsen.smartshop_brief_croise.dto.response.ApiResponse;
 import com.mohsen.smartshop_brief_croise.dto.response.ProduitResponseDTO;
 import com.mohsen.smartshop_brief_croise.service.interfaces.IProduitService;
@@ -73,4 +74,27 @@ public class ProduitController {
                         .build()
         );
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProduitResponseDTO>> updateProduit(@PathVariable Long id, @Valid @RequestBody ProduitUpdateDTO dto) {
+        ProduitResponseDTO updated = produitService.update(id, dto);
+        if (updated != null) {
+            return ResponseEntity.ok(
+                    ApiResponse.<ProduitResponseDTO>builder()
+                            .status("Success")
+                            .message("Produit mis à jour avec succès")
+                            .data(updated)
+                            .build()
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    ApiResponse.<ProduitResponseDTO>builder()
+                            .status("Error")
+                            .message("Produit non trouvé")
+                            .data(null)
+                            .build()
+            );
+        }
+    }
+
 }
