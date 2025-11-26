@@ -1,14 +1,15 @@
 package com.mohsen.smartshop_brief_croise.service.interfaces;
 
-import com.mohsen.smartshop_brief_croise.dto.ProduitDTO;
+import com.mohsen.smartshop_brief_croise.dto.request.ProduitRequestDTO;
+import com.mohsen.smartshop_brief_croise.dto.response.ProduitResponseDTO;
 import org.springframework.data.domain.Page;
 
 import java.awt.print.Pageable;
 
 public interface IProduitService {
-    ProduitDTO create(ProduitDTO produitDTO);
-    Page<ProduitDTO> getAll(Pageable pageable);
+    ProduitResponseDTO create(ProduitRequestDTO produitDTO);
+    Page<ProduitRequestDTO> getAll(Pageable pageable);
     boolean delete(Long id);
-    ProduitDTO update(Long id, ProduitDTO produitDTO);
+    ProduitRequestDTO update(Long id, ProduitRequestDTO produitDTO);
 
 }

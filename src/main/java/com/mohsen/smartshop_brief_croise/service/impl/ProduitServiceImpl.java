@@ -1,6 +1,7 @@
 package com.mohsen.smartshop_brief_croise.service.impl;
 
-import com.mohsen.smartshop_brief_croise.dto.ProduitDTO;
+import com.mohsen.smartshop_brief_croise.dto.request.ProduitRequestDTO;
+import com.mohsen.smartshop_brief_croise.dto.response.ProduitResponseDTO;
 import com.mohsen.smartshop_brief_croise.mapper.ProduitMapper;
 import com.mohsen.smartshop_brief_croise.model.Produit;
 import com.mohsen.smartshop_brief_croise.repository.ProduitRepository;
@@ -18,14 +19,16 @@ public class ProduitServiceImpl implements IProduitService {
     final ProduitMapper produitMapper;
 
     @Override
-    public ProduitDTO create(ProduitDTO produitDTO) {
+    public ProduitResponseDTO create(ProduitRequestDTO produitDTO) {
       Produit produit = produitMapper.toEntity(produitDTO);
         Produit saved = produitRepository.save(produit);
-        return produitMapper.toDTO(saved);
+//        return produitMapper.toRequestDTO(saved);
+        return produitMapper.toResponseDTO(saved);
+
     }
 
     @Override
-    public Page<ProduitDTO> getAll(Pageable pageable) {
+    public Page<ProduitRequestDTO> getAll(Pageable pageable) {
         return null;
     }
 
@@ -35,7 +38,7 @@ public class ProduitServiceImpl implements IProduitService {
     }
 
     @Override
-    public ProduitDTO update(Long id, ProduitDTO produitDTO) {
+    public ProduitRequestDTO update(Long id, ProduitRequestDTO produitDTO) {
         return null;
     }
 }

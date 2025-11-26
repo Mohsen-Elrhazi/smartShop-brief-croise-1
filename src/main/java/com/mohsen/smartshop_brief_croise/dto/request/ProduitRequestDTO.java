@@ -1,4 +1,4 @@
-package com.mohsen.smartshop_brief_croise.dto;
+package com.mohsen.smartshop_brief_croise.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,8 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProduitDTO {
-//    private Long id;
+public class ProduitRequestDTO {
 
     @NotBlank(message = "Le nom du produit est obligatoire")
     private String nom;
