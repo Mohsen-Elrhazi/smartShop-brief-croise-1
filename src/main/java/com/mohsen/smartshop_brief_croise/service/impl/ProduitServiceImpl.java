@@ -30,12 +30,6 @@ public class ProduitServiceImpl implements IProduitService {
     }
 
     @Override
-    public Page<ProduitResponseDTO> getAll(Pageable pageable) {
-       Page<Produit> produits =produitRepository.findByDeletedFalse(pageable);
-         return produits.map(produitMapper::toResponseDTO);
-    }
-
-    @Override
     public boolean delete(Long id) {
             Optional<Produit> produitOpt= produitRepository.findById(id);
 
@@ -67,5 +61,20 @@ public class ProduitServiceImpl implements IProduitService {
             return produitMapper.toResponseDTO(updated);
         }
         return null;
+    }
+
+    @Override
+    public Page<ProduitResponseDTO> getAll(String nom, Double prixMin, Double prixMax, Pageable pageable) {
+        // valeurs par défaut si null
+        if (nom == null) nom = "";
+        if (prixMin == null) prixMin = 0.0;
+        if (prixMax == null) prixMax = Double.MAX_VALUE;
+
+        Page<Produit> produits =
+                produitRepository.findByDeletedFalseAndNomContainingIgnoreCaseAndPrixUnitaireBetween(
+                        nom, prixMin, prixMax, pageable
+                );
+
+        return produits.map(produitMapper::toResponseDTO);
     }
 }

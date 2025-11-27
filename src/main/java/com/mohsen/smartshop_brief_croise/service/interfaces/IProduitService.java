@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface IProduitService {
     ProduitResponseDTO create(ProduitRequestDTO produitDTO);
-    Page<ProduitResponseDTO> getAll(Pageable pageable);
     boolean delete(Long id);
     ProduitResponseDTO update(Long id, ProduitUpdateDTO produitDTO);
+    Page<ProduitResponseDTO> getAll(String nom, Double prixMin, Double prixMax, Pageable pageable);
 
 }

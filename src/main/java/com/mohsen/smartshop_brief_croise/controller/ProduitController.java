@@ -61,19 +61,28 @@ public class ProduitController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<Page<ProduitResponseDTO>>> getAllProduits(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) Double prixMin,
+            @RequestParam(required = false) Double prixMax,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
-    ){
+    ) {
+
         Pageable pageable = PageRequest.of(page, size);
-        Page<ProduitResponseDTO> produits = produitService.getAll(pageable);
+
+        Page<ProduitResponseDTO> produits =
+                produitService.getAll(nom, prixMin, prixMax, pageable);
+
         return ResponseEntity.ok(
                 ApiResponse.<Page<ProduitResponseDTO>>builder()
                         .status("Success")
-                        .message("Liste des produits récupérée avec succès")
+                        .message("Produits filtrés récupérés avec succès")
                         .data(produits)
                         .build()
         );
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ProduitResponseDTO>> updateProduit(@PathVariable Long id, @Valid @RequestBody ProduitUpdateDTO dto) {

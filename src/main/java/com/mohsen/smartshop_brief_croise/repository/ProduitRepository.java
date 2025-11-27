@@ -12,4 +12,12 @@ import java.util.List;
 @Repository
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
     Page<Produit> findByDeletedFalse(Pageable pageable);
+
+    // Filtre complet
+    Page<Produit> findByDeletedFalseAndNomContainingIgnoreCaseAndPrixUnitaireBetween(
+            String nom,
+            double PrixMin,
+            double PrixMax,
+            Pageable pageable
+    );
 }
