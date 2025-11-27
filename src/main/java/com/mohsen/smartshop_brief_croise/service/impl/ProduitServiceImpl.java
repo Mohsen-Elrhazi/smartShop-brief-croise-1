@@ -47,10 +47,6 @@ public class ProduitServiceImpl implements IProduitService {
         if(produitOpt.isPresent()){
             Produit produit= produitOpt.get();
 
-//           produit.setNom(dto.getNom());
-//           produit.setPrixUnitaire(dto.getPrixUnitaire());
-//           produit.setStockDisponible(dto.getStockDisponible());
-
             if (dto.getNom() != null) produit.setNom(dto.getNom());
             if (dto.getPrixUnitaire() != null) produit.setPrixUnitaire(dto.getPrixUnitaire());
             if (dto.getStockDisponible() != null) produit.setStockDisponible(dto.getStockDisponible());

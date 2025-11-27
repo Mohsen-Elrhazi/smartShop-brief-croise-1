@@ -1,6 +1,7 @@
 package com.mohsen.smartshop_brief_croise.service.impl;
 
 import com.mohsen.smartshop_brief_croise.dto.request.UserRequestDTO;
+import com.mohsen.smartshop_brief_croise.dto.request.UserUpdateDTO;
 import com.mohsen.smartshop_brief_croise.dto.response.UserResponseDTO;
 import com.mohsen.smartshop_brief_croise.enums.UserRole;
 import com.mohsen.smartshop_brief_croise.mapper.UserMapper;
@@ -11,6 +12,8 @@ import com.mohsen.smartshop_brief_croise.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +31,27 @@ public class UserServiceImpl implements IUserService {
         user.setRole(UserRole.CLIENT);
         User saved = userRepository.save(user);
         return userMapper.toResponseDTO(saved);
+    }
+
+    @Override
+    public UserResponseDTO update(Long id, UserUpdateDTO dto) {
+        Optional<User> userOpt = userRepository.findById(id);
+
+        if(userOpt.isPresent()){
+            User user= userOpt.get();
+
+
+            if (dto.getUsername() != null) {
+                user.setUsername(dto.getUsername());
+            }
+
+            if (dto.getPassword() != null) {
+                user.setPassword(PasswordUtils.hashPassword(dto.getPassword()));
+            }
+
+            User updated= userRepository.save(user);
+            return userMapper.toResponseDTO(updated);
+        }
+        return null;
     }
 }

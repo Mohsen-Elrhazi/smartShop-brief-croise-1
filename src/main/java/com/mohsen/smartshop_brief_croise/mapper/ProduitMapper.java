@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "Spring")
 public interface ProduitMapper {
-    ProduitRequestDTO toRequestDTO(Produit produit);
+//    ProduitRequestDTO toRequestDTO(Produit produit);
 
     Produit toEntity(ProduitRequestDTO produitDTO);
 

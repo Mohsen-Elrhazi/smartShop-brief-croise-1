@@ -2,6 +2,7 @@ package com.mohsen.smartshop_brief_croise.controller;
 
 
 import com.mohsen.smartshop_brief_croise.dto.request.UserRequestDTO;
+import com.mohsen.smartshop_brief_croise.dto.request.UserUpdateDTO;
 import com.mohsen.smartshop_brief_croise.dto.response.ApiResponse;
 import com.mohsen.smartshop_brief_croise.dto.response.UserResponseDTO;
 import com.mohsen.smartshop_brief_croise.service.interfaces.IUserService;
@@ -10,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name="users",description="API pour gerer les users")
 @RestController
@@ -33,5 +31,27 @@ public class UserController {
                         .data(created)
                         .build()
         );
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<UserResponseDTO>> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
+        UserResponseDTO updated = userService.update(id, dto);
+        if (updated != null) {
+            return ResponseEntity.ok(
+                    ApiResponse.<UserResponseDTO>builder()
+                            .status("Success")
+                            .message("User mis à jour avec succès")
+                            .data(updated)
+                            .build()
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    ApiResponse.<UserResponseDTO>builder()
+                            .status("Error")
+                            .message("User non trouvé")
+                            .data(null)
+                            .build()
+            );
+        }
     }
 }
