@@ -24,9 +24,7 @@ public class ProduitServiceImpl implements IProduitService {
     public ProduitResponseDTO create(ProduitRequestDTO produitDTO) {
       Produit produit = produitMapper.toEntity(produitDTO);
         Produit saved = produitRepository.save(produit);
-//        return produitMapper.toRequestDTO(saved);
         return produitMapper.toResponseDTO(saved);
-
     }
 
     @Override
