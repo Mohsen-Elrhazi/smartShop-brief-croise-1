@@ -6,6 +6,7 @@ import com.mohsen.smartshop_brief_croise.dto.response.ApiResponse;
 import com.mohsen.smartshop_brief_croise.dto.response.UserResponseDTO;
 import com.mohsen.smartshop_brief_croise.service.interfaces.IUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<ApiResponse<UserResponseDTO>> createUser(@RequestBody UserRequestDTO dto) {
+    public ResponseEntity<ApiResponse<UserResponseDTO>> createUser(@Valid @RequestBody UserRequestDTO dto) {
         UserResponseDTO created = userService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 ApiResponse.<UserResponseDTO>builder()

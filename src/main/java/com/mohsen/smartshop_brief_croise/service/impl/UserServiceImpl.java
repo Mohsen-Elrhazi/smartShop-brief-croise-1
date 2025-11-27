@@ -7,6 +7,7 @@ import com.mohsen.smartshop_brief_croise.mapper.UserMapper;
 import com.mohsen.smartshop_brief_croise.model.User;
 import com.mohsen.smartshop_brief_croise.repository.UserRepository;
 import com.mohsen.smartshop_brief_croise.service.interfaces.IUserService;
+import com.mohsen.smartshop_brief_croise.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,7 @@ public class UserServiceImpl implements IUserService {
         User user = userMapper.toEntity(dto);
 
         // Hasher le mot de passe avant de sauvegarder
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setPassword(PasswordUtils.hashPassword(dto.getPassword()));
 
         user.setRole(UserRole.CLIENT);
         User saved = userRepository.save(user);
