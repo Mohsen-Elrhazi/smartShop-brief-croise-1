@@ -30,4 +30,14 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ClientNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleClientNotFoundException(ClientNotFoundException ex) {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("status", HttpStatus.NOT_FOUND.value());
+        response.put("error", "Client Not Found");
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }
