@@ -29,6 +29,14 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     public ClientResponseDTO updateClient(Long id, ClientUpdateDTO dto) {
-        
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> {
+                    return new ClientNotFoundException("Client with ID '" + id + "' not found.");
+                });
+        if (dto.getNom() != null) client.setNom(dto.getNom());
+        if (dto.getEmail() != null) client.setEmail(dto.getEmail());
+
+        Client updatedClient = clientRepository.save(client);
+        return clientMapper.toResponseDTO(updatedClient);
     }
 }
