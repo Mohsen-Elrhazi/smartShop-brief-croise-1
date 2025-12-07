@@ -6,27 +6,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Produit {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private String nom;
+    private int quantite;
 
     private double prixUnitaire;
 
-    private int stockDisponible;
+    private double totalLigne;
 
-    private boolean deleted;
+    @ManyToOne
+    @JoinColumn(name = "commande_id")
+    private Commande commande;
 
-    @OneToMany(mappedBy = "produit")
-    private List<OrderItem> items = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "produit_id")
+    private Produit produit;
 }
