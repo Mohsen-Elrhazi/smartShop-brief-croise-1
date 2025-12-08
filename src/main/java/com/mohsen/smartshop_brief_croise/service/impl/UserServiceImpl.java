@@ -26,7 +26,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserClientResponseDTO createUserWithClient(UserClientRequestDTO dto) {
-        // 1️⃣ Créer le client
         Client client = Client.builder()
                 .nom(dto.getNom())
                 .email(dto.getEmail())
@@ -34,7 +33,6 @@ public class UserServiceImpl implements IUserService {
                 .build();
         Client savedClient = clientRepository.save(client);
 
-        // 2️⃣ Créer l'utilisateur et lier au client
         User user = User.builder()
                 .username(dto.getUsername())
                 .password(PasswordUtils.hashPassword(dto.getPassword()))
@@ -43,7 +41,6 @@ public class UserServiceImpl implements IUserService {
                 .build();
         User savedUser = userRepository.save(user);
 
-        // 3️⃣ Retourner le DTO de réponse
         return userMapper.toUserClientResponseDTO(savedUser);
     }
 
