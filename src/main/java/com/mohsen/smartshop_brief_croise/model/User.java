@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String username;
 
@@ -23,4 +23,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @OneToOne
+    @JoinColumn(name = "client_id", unique = true)
+    private Client client;
 }
+

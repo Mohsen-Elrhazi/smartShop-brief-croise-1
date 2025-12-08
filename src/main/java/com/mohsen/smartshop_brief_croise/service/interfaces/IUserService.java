@@ -1,10 +1,10 @@
 package com.mohsen.smartshop_brief_croise.service.interfaces;
 
-import com.mohsen.smartshop_brief_croise.dto.request.UserRequestDTO;
-import com.mohsen.smartshop_brief_croise.dto.request.UserUpdateDTO;
-import com.mohsen.smartshop_brief_croise.dto.response.UserResponseDTO;
+import com.mohsen.smartshop_brief_croise.dto.request.UserClientRequestDTO;
+import com.mohsen.smartshop_brief_croise.dto.response.UserClientResponseDTO;
 
 public interface IUserService {
-    UserResponseDTO create(UserRequestDTO dto);
-    UserResponseDTO update(Long id, UserUpdateDTO dto);
+//    UserResponseDTO createUser(UserRequestDTO dto);
+//    UserResponseDTO update(Long id, UserUpdateDTO dto);
+    UserClientResponseDTO createUserWithClient(UserClientRequestDTO dto);
 }
